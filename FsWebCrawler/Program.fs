@@ -1,5 +1,4 @@
-﻿open System.Linq
-open System.Net
+﻿open System.Net
 open System.Text.RegularExpressions
 
 (**
@@ -11,7 +10,7 @@ page.</param>
 
 <param name="pageUrl">The URL of the page to crawl.</param>
 
-<returns>A list of URLs which are links found in the crawled
+<returns>A collection of URLs which are links found in the crawled
 page.</returns>
 *)
 let crawlPage (client : WebClient) (pageUrl : string) =
@@ -22,13 +21,13 @@ let crawlPage (client : WebClient) (pageUrl : string) =
       Regex.Matches(
         pageContent,
         "a href=['\"](.[^'\"]+)['\"]",
-        RegexOptions.Compiled).Cast<Match>()
+        RegexOptions.Compiled)
 
     pageLinkMatches
+    |> Seq.cast<Match>
     |> Seq.map (fun m -> m.Groups.Item(1).Value)
-    |> List.ofSeq
 
-  with | _ -> []
+  with | _ -> Seq.empty
 
 (**
 <summary>Crawl a given site to a given depth and print out the links

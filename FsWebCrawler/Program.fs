@@ -74,7 +74,10 @@ command-line arguments and makes sure they're valid.
 [<EntryPoint>]
 let main argv =
   let usage () =
-    printfn "USAGE: FsWebCrawler depth siteUrl\n\ndepth must be a whole number\nsiteUrl must be a valid URL"
+    printfn @"USAGE: FsWebCrawler depth siteUrl
+
+depth must be a whole number
+siteUrl must be a valid URL"
     1
 
   match argv with

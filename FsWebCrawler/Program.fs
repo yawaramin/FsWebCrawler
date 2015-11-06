@@ -84,8 +84,14 @@ siteUrl must be a valid URL"
     try
       let depth = System.Int32.Parse(depthStr)
 
-      crawl depth siteUrl
-      0
+      match System.Uri.CheckHostName(siteUrl) with
+      | System.UriHostNameType.Basic
+      | System.UriHostNameType.Unknown -> usage ()
+
+      | _ ->
+        crawl depth siteUrl
+        0
+
     with | _ -> usage ()
 
   | _ -> usage ()
